@@ -1,9 +1,8 @@
 
 import express from 'express'
 import {store, Book} from '../book.js'
-import {storage, fileFilter} from '../middleware/file.js'
+import {storage} from '../middleware/file.js'
 import multer from 'multer'
-import * as util from 'util';
 
 export const router = express.Router();
 
@@ -19,7 +18,9 @@ router.get('/:id/download', (req, res) => {
         return;
     }
 
-    res.download(book.fileBook.path);
+    console.log(book.fileBook[0].path);
+
+    res.download(book.fileBook[0].path);
 });
 
 router.get('/', (req, res) => {
@@ -53,9 +54,10 @@ router.get('/:id', (req, res) => {
 
 });
 
-router.post('/create', multer({storage: storage, fileFilter: fileFilter}).single('inputFile'), 
+router.post('/create',  multer({storage: storage}).fields([{name: 'fileCover', maxCount: 1}, {name: 'fileBook', maxCount: 1}]),
     (req, res, next) => {
-    const filedata = req.file;
+    const filedata = req.files['fileBook'];
+    const imagedata = req.files['fileCover'];
 
     if (!filedata){
         res.json('Ошибка при загрузке файла');
@@ -63,10 +65,10 @@ router.post('/create', multer({storage: storage, fileFilter: fileFilter}).single
     }
 
     const {books} = store;
-    const {title, desc, authors, favority, fileCover} = req.body;
+    const {title, desc, authors, favority} = req.body;
     const fileName = filedata.originalname;
 
-    const newBook = new Book(title, desc, authors, favority, fileCover, fileName, filedata);
+    const newBook = new Book(title, desc, authors, favority, imagedata, fileName, filedata);
     books.push(newBook);
 
     res.redirect('/api/books');
@@ -87,7 +89,7 @@ router.get('/update/:id', (req, res) => {
     });
 });
 
-router.post('/update/:id', multer({storage: storage, fileFilter: fileFilter}).single('inputFile'),
+router.post('/update/:id', multer({storage: storage}).fields([{name: 'fileCover', maxCount: 1}, {name: 'fileBook', maxCount: 1}]),
     (req, res) => {
     const {books} = store;
     const {title, desc} = req.body;

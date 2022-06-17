@@ -19,18 +19,23 @@
     </div>
 
     <div class="form-group">
-        <label for="inputDesc">Описание</label>
+        <label for="inputAuthors">Авторы</label>
         <textarea
                 rows="3"
-                name="desc"
+                name="authors"
                 class="form-control"
-                id="inputDesc"
-        ><%= book.desc %></textarea>
+                id="inputAuthors"
+        ><%= book.authors %></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="fileCover">Обложка книги</label>
+        <input type="file" class="form-control-file" id="inputImage" name="fileCover">
     </div>
 
     <div class="form-group">
         <label for="inputFile">Файл книги</label>
-        <input type="file" class="form-control-file" id="inputFile" name="inputFile">
+        <input type="file" class="form-control-file" id="inputFile" name="fileBook">
     </div>
 
     <div class="form-group text-right ">

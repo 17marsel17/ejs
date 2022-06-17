@@ -10,6 +10,9 @@
 
                 <h5 class="card-title"><%= book.title %></h5>
                 <p class="card-text"><%= book.desc %></p>
+                <p class="card-text"><%= book.authors %></p>
+                <img class="card-img-top" src="../../load/<%= book.fileCover[0].filename %>" alt="image" width="50%" height="50%">
+                <a class="btn btn-sm btn-primary" href="/api/books/<%= book.id %>/download">Скачать файл книги</a>
 
                 <div class="text-right">
                     <a class="btn btn-sm btn-primary" href="/api/books/update/<%= book.id %>">

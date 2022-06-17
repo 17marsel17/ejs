@@ -10,14 +10,3 @@ export const storage = multer.diskStorage({
     }
 });
 
-export const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'application/pdf' ||
-        file.mimetype === 'text/plain' ||
-        file.mimetype === 'application/msword'){
-            cb(null, true);
-        } else {
-            cb(null, false);
-        }
-}
-
-

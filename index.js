@@ -5,12 +5,17 @@ import {router as userRouter} from './routes/userRouter.js'
 import {router as mainRouter} from './routes/index.js'
 import {logger} from './middleware/logger.js'
 import {error as error404} from './middleware/err-404.js'
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use('/load', express.static(__dirname+'/load'))
 
 app.use(logger);
 
