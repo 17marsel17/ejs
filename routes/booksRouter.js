@@ -25,14 +25,14 @@ router.get('/:id/download', (req, res) => {
 router.get('/', (req, res) => {
     const {books} = store;
     res.render('books/index', {
-        title: "books",
+        title: "Список книг",
         books: books,
     });
 });
 
 router.get('/create', (req, res) => {
     res.render('books/create', {
-        title: "Book | create",
+        title: "Добавить книгу",
         book: {},
     })
 });
@@ -47,7 +47,7 @@ router.get('/:id', (req, res) => {
     }
 
     res.render("books/view", {
-        title: "Book | view",
+        title: "Просмотр книги",
         book: book,
     });
 
@@ -82,7 +82,7 @@ router.get('/update/:id', (req, res) => {
     }
 
     res.render('books/update', {
-        title: "Book | view",
+        title: "Редактирование книги",
         book: books[idx],
     });
 });
