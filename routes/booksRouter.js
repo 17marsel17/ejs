@@ -1,7 +1,7 @@
 
 import express from 'express'
 import {store, Book} from '../book.js'
-import {storage} from '../middleware/file.js'
+import {storage, fileFilter} from '../middleware/file.js'
 import multer from 'multer'
 
 export const router = express.Router();
@@ -17,8 +17,6 @@ router.get('/:id/download', (req, res) => {
         
         return;
     }
-
-    console.log(book.fileBook[0].path);
 
     res.download(book.fileBook[0].path);
 });
@@ -54,7 +52,7 @@ router.get('/:id', (req, res) => {
 
 });
 
-router.post('/create',  multer({storage: storage}).fields([{name: 'fileCover', maxCount: 1}, {name: 'fileBook', maxCount: 1}]),
+router.post('/create',  multer({storage: storage, fileFilter: fileFilter}).fields([{name: 'fileCover', maxCount: 1}, {name: 'fileBook', maxCount: 1}]),
     (req, res, next) => {
     const filedata = req.files['fileBook'];
     const imagedata = req.files['fileCover'];
@@ -89,7 +87,7 @@ router.get('/update/:id', (req, res) => {
     });
 });
 
-router.post('/update/:id', multer({storage: storage}).fields([{name: 'fileCover', maxCount: 1}, {name: 'fileBook', maxCount: 1}]),
+router.post('/update/:id', multer({storage: storage, fileFilter: fileFilter}).fields([{name: 'fileCover', maxCount: 1}, {name: 'fileBook', maxCount: 1}]),
     (req, res) => {
     const {books} = store;
     const {title, desc} = req.body;

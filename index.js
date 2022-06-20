@@ -3,6 +3,7 @@ import {PORT} from './config.js'
 import {router as booksRouter} from './routes/booksRouter.js'
 import {router as userRouter} from './routes/userRouter.js'
 import {router as mainRouter} from './routes/index.js'
+import {router as apiRouter} from './routes/apiRouter.js'
 import {logger} from './middleware/logger.js'
 import {error as error404} from './middleware/err-404.js'
 import { dirname } from 'path';
@@ -22,6 +23,7 @@ app.use(logger);
 app.use('/', mainRouter);
 app.use('/api/books', booksRouter);
 app.use('/api/user', userRouter);
+app.use('/api', apiRouter);
 
 app.use(error404);
 
